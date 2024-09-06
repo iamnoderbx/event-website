@@ -1,8 +1,23 @@
-# Welcome to Remix!
+## Installation
 
-- 📖 [Remix docs](https://remix.run/docs)
+You will want to ensure that you have a server to host your website on, a domain is optional, but recommended.
+Some cheap hosting options for servers can be found below, a virtual private server - not a dedicated - will work for our cases.
+- [Galaxy Gate](https://galaxygate.net/)
+- [Contabo](https://contabo.com/en-us/)
+
+Clone the repository to your server, or your local machine.
+- gh repo clone iamnoderbx/event-website
+
+Install any missing dependencies.
+```shellscript
+npm install
+```
+
+Production steps for deployment can be found below.
 
 ## Development
+
+If you're looking to modify the website, you can view your changes live, and get feedback.
 
 Run the dev server:
 
@@ -24,7 +39,7 @@ Then run the app in production mode:
 npm start
 ```
 
-Now you'll need to pick a host to deploy it to.
+Now you'll need to pick a host to deploy it to, a list has been provided within the Installation.
 
 ### DIY
 
