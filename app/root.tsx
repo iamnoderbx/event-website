@@ -13,6 +13,7 @@ import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from "remix-themes"
 import { themeSessionResolver } from "./session/sessions.server";
 import { LoaderFunctionArgs } from "@remix-run/node";
 import clsx from "clsx";
+import { ModeToggle } from "./components/mode-toggle";
 
 
 // Return the theme from the session storage using the loader
@@ -37,6 +38,7 @@ export function App() {
         <Links />
       </head>
       <body>
+        <ModeToggle />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
