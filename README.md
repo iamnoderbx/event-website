@@ -15,6 +15,15 @@ npm install
 
 Production steps for deployment can be found below.
 
+## Setup Environments
+
+You will want to ensure you create a .env file within your 
+code base root. Within the environment the following template should be used.
+
+```env
+OWNER_ID=<DISCORD_ID>
+```
+
 ## Development
 
 If you're looking to modify the website, you can view your changes live, and get feedback.
@@ -24,22 +33,6 @@ Run the dev server:
 ```shellscript
 npm run dev
 ```
-
-## Deployment
-
-First, build your app for production:
-
-```sh
-npm run build
-```
-
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to, a list has been provided within the Installation.
 
 ### DIY
 

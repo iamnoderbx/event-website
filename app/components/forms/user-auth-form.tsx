@@ -20,7 +20,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 	return (
 		<div className={cn("grid gap-3", className)} {...props}>
 			<form onSubmit={onSubmit}>
-				<Button variant="outline" type="button" disabled={isLoading} className="w-full">
+				<Button variant="outline" type="submit" disabled={isLoading} className="w-full">
 					{isLoading ? (
 						<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
 					) : (
