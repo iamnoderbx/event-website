@@ -15,7 +15,17 @@ Install any missing dependencies.
 npm install
 ```
 
-Production steps for deployment can be found below.
+Update your environment file, instructions can be found below.
+
+Run the build command.
+```shellscript
+npm run build
+```
+
+Start up the web server.
+```shellscript
+npm run start
+```
 
 ## Setup Environments
 
