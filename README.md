@@ -6,7 +6,9 @@ Some cheap hosting options for servers can be found below, a virtual private ser
 - [Contabo](https://contabo.com/en-us/)
 
 Clone the repository to your server, or your local machine.
-- gh repo clone iamnoderbx/event-website
+```shellscript
+gh repo clone iamnoderbx/event-website
+```
 
 Install any missing dependencies.
 ```shellscript
