@@ -21,7 +21,7 @@ You will want to ensure you create a .env file within your
 code base root. Within the environment the following template should be used.
 
 ```env
-OWNER_ID=<DISCORD_ID>
+OWNER_ID=INSERT_DISCORD_ID_NUMBER_HERE
 ```
 
 ## Development
