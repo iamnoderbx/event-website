@@ -3,7 +3,9 @@ import { Button } from "../ui/button"
 import { cn } from "~/lib/utils"
 import { Icons } from "../icons"
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { 
+	onClicked: () => void
+}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -15,6 +17,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 		setTimeout(() => {
 			setIsLoading(false)
 		}, 3000)
+
+		props.onClicked()
 	}
 
 	return (

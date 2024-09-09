@@ -1,109 +1,35 @@
-import type { MetaFunction } from "@remix-run/node";
-import { Link } from "lucide-react";
+import { redirect, type MetaFunction } from "@remix-run/node";
 import { UserAuthForm } from "~/components/forms/user-auth-form";
-import { buttonVariants } from "~/components/ui/button";
-import { cn } from "~/lib/utils";
+import LoginComponent from "~/components/login";
+import * as zod from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRemixForm } from "remix-hook-form";
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+	return [
+		{ title: "New Remix App" },
+		{ name: "description", content: "Welcome to Remix!" },
+	];
 };
 
-export async function loader() {
-  console.log(process.env);
+// Our schema for the redirect form, no need for any fields
+const schema = zod.object({})
 
-  return null
-}
+// The type of the form data
+type FormData = zod.infer<typeof schema>
+const resolver = zodResolver(schema)
+
+// The action for the form, will redirect to an oAuth2 Discord login
+export const action = async () => {
+	return redirect("https://google.com/")
+};
 
 export default function Index() {
-  return (
-    <>
-      <div className="container relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none ">
-        <Link
-          href="/examples/authentication"
-          className={cn(
-            buttonVariants({ variant: "ghost" }),
-            "absolute right-4 top-4 md:right-8 md:top-8"
-          )}
-        >
-          Login
-        </Link>
+	const { handleSubmit } = useRemixForm<FormData>({
+		mode: "onSubmit", resolver,
+	})
 
-        <div
-          className="absolute inset-0 flex justify-center items-center w-[100%] h-full animate-move-bg"
-          style={{
-            backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='rgba(51, 92, 158, 0.03)'%3E%3Cpolygon fill-rule='evenodd' points='8 4 12 6 8 8 6 12 4 8 0 6 4 4 6 0 8 4'/%3E%3C/g%3E%3C/svg%3E\")",
-            zIndex: -1,
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        />
-
-        <style >{`
-          @keyframes move-bg {
-            0% {
-              background-position: 0 0;
-            }
-            50% {
-              background-position: 50px 50px;
-            }
-            100% {
-              background-position: 0 0;
-            }
-          }
-        
-          .animate-move-bg {
-            animation: move-bg 20s ease-in-out infinite;
-          }
-        `}</style>
-
-        <div
-          className="absolute inset-0 flex justify-center items-center w-[60%] h-full bg-background"
-          style={{
-            background: "radial-gradient(circle, rgba(50, 123, 255, 0.05), transparent 50%)",
-            zIndex: -1,
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        />
-
-        <div className="relative lg:p-8 z-30">
-
-          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-            <div className="flex flex-col space-y-2 text-center">
-              <h1 className="text-2xl font-semibold tracking-tight">
-                Verify your Identity
-              </h1>
-            </div>
-
-            <div className="relative">
-              <div className="absolute inset-2 flex items-center">
-                <div className="flex-grow border-t" />
-                <span className="px-2 text-muted-foreground justify-center text-xs uppercase" style={{ backgroundColor: 'transparent' }}>
-                  Continue with Discord
-                </span>
-
-                <div className="flex-grow border-t" />
-              </div>
-            </div>
-
-            <br />
-            <UserAuthForm />
-
-            <br />
-            <p className="px-8 text-center text-sm text-muted-foreground">
-              By clicking continue, you agree to our{" "}
-              <a href="https://github.com/iamnoderbx/event-website"><u>Terms of Service</u></a>{" "}
-              and{" "}
-              <a href="https://github.com/iamnoderbx/event-website"><u>Privacy Policy</u></a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </>
-  )
+	return <LoginComponent>
+		<UserAuthForm onClicked={handleSubmit}/>
+	</LoginComponent>
 }

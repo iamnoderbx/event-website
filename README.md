@@ -34,6 +34,8 @@ code base root. Within the environment the following template should be used.
 
 ```env
 OWNER_ID=INSERT_DISCORD_ID_NUMBER_HERE
+CLIENT_ID=DISCORD_BOT_AUTH_CLIENT
+CLIENT_SECRET=DISCORD_BOT_AUTH_SECRET
 ```
 
 ## Development
