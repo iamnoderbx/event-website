@@ -1,4 +1,4 @@
-import { redirect, type MetaFunction } from "@remix-run/node";
+import { ActionFunctionArgs, redirect, type MetaFunction } from "@remix-run/node";
 import { UserAuthForm } from "~/components/forms/user-auth-form";
 import LoginComponent from "~/components/login";
 import * as zod from "zod";
@@ -20,7 +20,8 @@ type FormData = zod.infer<typeof schema>
 const resolver = zodResolver(schema)
 
 // The action for the form, will redirect to an oAuth2 Discord login
-export const action = async () => {
+export const action = async ( { context } : ActionFunctionArgs) => {
+	console.log(context)
 	return redirect("https://google.com/")
 };
 
