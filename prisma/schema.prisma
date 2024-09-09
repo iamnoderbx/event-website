@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  users       User[]
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String
+  discord  String @unique
+  avatar   String
+  roleId   Int
+  role     Role   @relation(fields: [roleId], references: [id])
+}

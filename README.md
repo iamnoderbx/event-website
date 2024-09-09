@@ -33,9 +33,11 @@ You will want to ensure you create a .env file within your
 code base root. Within the environment the following template should be used.
 
 ```env
-OWNER_ID=INSERT_DISCORD_ID_NUMBER_HERE
-CLIENT_ID=DISCORD_BOT_AUTH_CLIENT
-CLIENT_SECRET=DISCORD_BOT_AUTH_SECRET
+OWNER_ID=DISCORD_ID
+CLIENT_ID=AUTH_CLIENT
+CLIENT_SECRET=AUTH_SECRET
+REDIRECT_URI=DOMAIN/login
+DATABASE_URL="file:./data/sqlite.db"
 ```
 
 ## Development
