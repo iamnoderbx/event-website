@@ -1,8 +1,9 @@
 import { TrendingUp } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, XAxis } from "recharts"
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../ui/card"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart"
+import { Theme, useTheme } from "remix-themes"
 
 export const description = "An area chart with gradient fill"
 
@@ -24,8 +25,10 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function GradientChart() {
+	const [ theme ] = useTheme()
+	
 	return (
-		<Card>
+		<Card className={theme === Theme.DARK ? "bg-zinc-900" : "bg-zinc-100"}>
 			<CardHeader>
 				<CardTitle>Weekly Players</CardTitle>
 				<CardDescription>
@@ -33,36 +36,38 @@ export function GradientChart() {
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<ChartContainer config={chartConfig}>
-					<AreaChart
-						accessibilityLayer
-						data={chartData}
-						margin={{
-							left: 12,
-							right: 12,
-						}}
-					>
-						<CartesianGrid vertical={false} />
-						<XAxis
-							dataKey="day"
-							tickLine={false}
-							axisLine={false}
-							tickMargin={8}
-							tickFormatter={(value) => value.slice(0, 3)}
-						/>
-						<ChartTooltip
-							cursor={false}
-							content={<ChartTooltipContent indicator="line" />}
-						/>
-						<Area
-							dataKey="desktop"
-							type="natural"
-							fill="var(--color-desktop)"
-							fillOpacity={0.4}
-							stroke="var(--color-desktop)"
-						/>
-					</AreaChart>
-				</ChartContainer>
+				<ResponsiveContainer height={"300px"}>
+					<ChartContainer config={chartConfig}>
+						<AreaChart
+							accessibilityLayer
+							data={chartData}
+							margin={{
+								left: 12,
+								right: 12,
+							}}
+						>
+							<CartesianGrid vertical={false} />
+							<XAxis
+								dataKey="day"
+								tickLine={false}
+								axisLine={false}
+								tickMargin={8}
+								tickFormatter={(value) => value.slice(0, 3)}
+							/>
+							<ChartTooltip
+								cursor={false}
+								content={<ChartTooltipContent indicator="line" />}
+							/>
+							<Area
+								dataKey="desktop"
+								type="natural"
+								fill="var(--color-desktop)"
+								fillOpacity={0.4}
+								stroke="var(--color-desktop)"
+							/>
+						</AreaChart>
+					</ChartContainer>
+				</ResponsiveContainer>
 			</CardContent>
 			<CardFooter>
 				<div className="flex w-full items-start gap-2 text-sm">

@@ -1,9 +1,10 @@
 import * as React from "react"
-import { Label, Pie, PieChart, Sector } from "recharts"
+import { Label, Pie, PieChart, ResponsiveContainer, Sector } from "recharts"
 import { PieSectorDataItem } from "recharts/types/polar/Pie"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../ui/card"
 import { ChartConfig, ChartStyle, ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import { Theme, useTheme } from "remix-themes"
 
 const desktopData = [
 	{ username: "nodesupport", desktop: 186, fill: "hsl(var(--chart-1))" },
@@ -22,6 +23,8 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function SelectPieChart() {
+	const [theme] = useTheme()
+
 	const id = "pie-interactive"
 	const [activeuserName, setActiveuserName] = React.useState(desktopData[0].username)
 
@@ -30,9 +33,11 @@ export function SelectPieChart() {
 		[activeuserName]
 	)
 
+	// <Card className={theme === Theme.DARK ? "bg-zinc-900" : "bg-zinc-100"}>
+
 	const userNames = React.useMemo(() => desktopData.map((item) => item.username), [])
 	return (
-		<Card data-chart={id} className="flex flex-col">
+		<Card data-chart={id} className={`flex-1 bg-zinc-${theme === Theme.DARK ? 900 : 100}`}>
 			<ChartStyle id={id} config={chartConfig} />
 			<CardHeader className="flex-row items-start space-y-0 pb-0">
 				<div className="grid gap-1">
@@ -74,70 +79,75 @@ export function SelectPieChart() {
 					</SelectContent>
 				</Select>
 			</CardHeader>
+
+			<br />
+			<br />
 			<CardContent className="flex flex-1 justify-center pb-0">
-				<ChartContainer
-					id={id}
-					config={chartConfig}
-					className="mx-auto aspect-square w-full max-w-[300px]"
-				>
-					<PieChart>
-						<ChartTooltip
-							cursor={false}
-							content={<ChartTooltipContent />}
-						/>
-						<Pie
-							data={desktopData}
-							dataKey="desktop"
-							nameKey="userName"
-							innerRadius={60}
-							strokeWidth={5}
-							activeIndex={activeIndex}
-							activeShape={({
-								outerRadius = 0,
-								...props
-							}: PieSectorDataItem) => (
-								<g>
-									<Sector {...props} outerRadius={outerRadius + 10} />
-									<Sector
-										{...props}
-										outerRadius={outerRadius + 25}
-										innerRadius={outerRadius + 12}
-									/>
-								</g>
-							)}
-						>
-							<Label
-								content={({ viewBox }) => {
-									if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-										return (
-											<text
-												x={viewBox.cx}
-												y={viewBox.cy}
-												textAnchor="middle"
-												dominantBaseline="middle"
-											>
-												<tspan
+				<ResponsiveContainer height={"500px"}>
+					<ChartContainer
+						id={id}
+						config={chartConfig}
+						className="mx-auto aspect-square w-full max-w-[300px]"
+					>
+						<PieChart>
+							<ChartTooltip
+								cursor={false}
+								content={<ChartTooltipContent />}
+							/>
+							<Pie
+								data={desktopData}
+								dataKey="desktop"
+								nameKey="userName"
+								innerRadius={60}
+								strokeWidth={5}
+								activeIndex={activeIndex}
+								activeShape={({
+									outerRadius = 0,
+									...props
+								}: PieSectorDataItem) => (
+									<g>
+										<Sector {...props} outerRadius={outerRadius + 10} />
+										<Sector
+											{...props}
+											outerRadius={outerRadius + 25}
+											innerRadius={outerRadius + 12}
+										/>
+									</g>
+								)}
+							>
+								<Label
+									content={({ viewBox }) => {
+										if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+											return (
+												<text
 													x={viewBox.cx}
 													y={viewBox.cy}
-													className="fill-foreground text-3xl font-bold"
+													textAnchor="middle"
+													dominantBaseline="middle"
 												>
-													{desktopData[activeIndex].desktop.toLocaleString()}
-												</tspan>
-												<tspan
-													x={viewBox.cx}
-													y={(viewBox.cy || 0) + 24}
-													className="fill-muted-foreground"
-												>
-													Events
-												</tspan>
-											</text>
-										)
-									}
-								}}
-							/>
-						</Pie>
-					</PieChart>
-				</ChartContainer>
+													<tspan
+														x={viewBox.cx}
+														y={viewBox.cy}
+														className="fill-foreground text-3xl font-bold"
+													>
+														{desktopData[activeIndex].desktop.toLocaleString()}
+													</tspan>
+													<tspan
+														x={viewBox.cx}
+														y={(viewBox.cy || 0) + 24}
+														className="fill-muted-foreground"
+													>
+														Events
+													</tspan>
+												</text>
+											)
+										}
+									}}
+								/>
+							</Pie>
+						</PieChart>
+					</ChartContainer>
+				</ResponsiveContainer>
 			</CardContent>
 		</Card>
 	)

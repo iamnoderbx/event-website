@@ -2,6 +2,7 @@ import { TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../ui/card"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart"
+import { Theme, useTheme } from "remix-themes"
 
 const chartData = [
 	{ day: "Sunday", desktop: 186 },
@@ -19,8 +20,10 @@ const chartConfig = {
 	},
 } satisfies ChartConfig
 export function MultiBarChart() {
+	const [ theme ] = useTheme()
+	
 	return (
-		<Card>
+		<Card className={theme === Theme.DARK ? "bg-zinc-900 flex-1" : "bg-zinc-100 flex-1"}>
 			<CardHeader>
 				<CardTitle>Weekly Events</CardTitle>
 				<CardDescription>Showing the past weeks events</CardDescription>
